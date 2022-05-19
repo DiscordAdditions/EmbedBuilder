@@ -1,0 +1,37 @@
+{
+  "name": "@discord-additions/embed-builder",
+  "version": "1.0.1",
+  "description": "Some helpful additions to make creating embeds easier.",
+  "main": "build/index.js",
+  "scripts": {
+    "prepublishOnly": "rm -rf build && tsc && echo Finished"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiscordAdditions/EmbedBuilder.git"
+  },
+  "keywords": [
+    "eris",
+    "discord.js",
+    "embeds",
+    "additions",
+    "discord",
+    "discord-additions"
+  ],
+  "author": "Donovan Daniels <hewwo@yiff.rocks>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DiscordAdditions/Components/issues"
+  },
+  "homepage": "https://github.com/DiscordAdditions/Components#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^17.0.34",
+    "@uwu-codes/eslint-config": "^1.0.43",
+    "@uwu-codes/tsconfig": "^1.0.1",
+    "discord-api-types": "^0.33.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
