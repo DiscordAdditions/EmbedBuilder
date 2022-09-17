@@ -1,36 +1,29 @@
-import type {
-	APIEmbed,
-	APIEmbedAuthor,
-	APIEmbedField,
-	APIEmbedImage,
-	APIEmbedThumbnail
-} from "discord-api-types/v10";
-
+import type { EmbedAuthorOptions, EmbedField, EmbedImageOptions, EmbedOptions } from "oceanic.js";
 export default class EmbedBuilder {
 	/**
 	 * create an embed builder instance (or multiple) from the provided json
 	 *
-	 * @param {(APIEmbed | Array<APIEmbed>)} json - the embed json - accepts singular & array
+	 * @param {(EmbedOptions | Array<EmbedOptions>)} json - the embed json - accepts singular & array
 	 * @param {boolean} [forceSingular=false] - force a singular return when an array is supplied
 	 * @returns {(EmbedBuilder | Array<EmbedBuilder>)}
 	 */
-	static loadFromJSON(json: APIEmbed): EmbedBuilder;
-	static loadFromJSON<T extends boolean = false>(json: Array<APIEmbed>, forceSingular?: T): T extends true ? EmbedBuilder : Array<EmbedBuilder>;
-	static loadFromJSON(json: APIEmbed | Array<APIEmbed>, forceSingular?: boolean) {
+	static loadFromJSON(json: EmbedOptions): EmbedBuilder;
+	static loadFromJSON<T extends boolean = false>(json: Array<EmbedOptions>, forceSingular?: T): T extends true ? EmbedBuilder : Array<EmbedBuilder>;
+	static loadFromJSON(json: EmbedOptions | Array<EmbedOptions>, forceSingular?: boolean) {
 		if (Array.isArray(json)) {
 			const val = json.map((v) => EmbedBuilder.loadFromJSON(v));
 			return forceSingular ? val[0] : val;
 		} else return new EmbedBuilder().load(json);
 	}
-	private json: APIEmbed = {};
+	private json: EmbedOptions = {};
 	/**
 	 * load json into this embed builder instance - use static loadFromJSON method
 	 *
 	 * @private
-	 * @param {APIEmbed} json - the json to load
+	 * @param {EmbedOptions} json - the json to load
 	 * @returns {this}
 	 */
-	private load(json: APIEmbed) {
+	private load(json: EmbedOptions) {
 		this.json = json;
 		return this;
 	}
@@ -39,14 +32,14 @@ export default class EmbedBuilder {
 	 * set the embed author
 	 *
 	 * @param {string} name - the name of the author
-	 * @param {string} [icon_url] - an icon url for the author
+	 * @param {string} [iconURL] - an icon url for the author
 	 * @param {string} [url] - a url for the author
 	 * @returns {this}
 	 */
-	setAuthor(name: string, icon_url?: string, url?: string) {
+	setAuthor(name: string, iconURL?: string, url?: string) {
 		this.json.author = {
 			name,
-			icon_url,
+			iconURL,
 			url
 		};
 
@@ -55,7 +48,7 @@ export default class EmbedBuilder {
 	/**
 	 * get the current author
 	 *
-	 * @returns {(APIEmbedAuthor | undefined)}
+	 * @returns {(EmbedAuthorOptions | undefined)}
 	 */
 	getAuthor() { return this.json.author; }
 	/**
@@ -134,14 +127,14 @@ export default class EmbedBuilder {
 	/**
 	 * add multiple raw fields
 	 *
-	 * @param {...APIEmbedField} args - the fields to add
+	 * @param {...EmbedField} args - the fields to add
 	 * @returns {this}
 	 */
-	addFields(...args: Array<APIEmbedField>) { args.forEach(arg => this.addField(arg.name, arg.value, arg.inline)); return this; }
+	addFields(...args: Array<EmbedField>) { args.forEach(arg => this.addField(arg.name, arg.value, arg.inline)); return this; }
 	/**
 	 * get the current fields
 	 *
-	 * @returns {Array<APIEmbedField>}
+	 * @returns {Array<EmbedField>}
 	 */
 	getFields() { return (this.json.fields ?? []); }
 
@@ -149,10 +142,10 @@ export default class EmbedBuilder {
 	 * set the embed footer
 	 *
 	 * @param {string} text - the text
-	 * @param {string} [icon_url] - the icon url
+	 * @param {string} [iconURL] - the icon url
 	 * @returns {this}
 	 */
-	setFooter(text: string, icon_url?: string) { this.json.footer = { text, icon_url }; return this; }
+	setFooter(text: string, iconURL?: string) { this.json.footer = { text, iconURL }; return this; }
 	/**
 	 * get the current footer
 	 *
@@ -176,7 +169,7 @@ export default class EmbedBuilder {
 	/**
 	 * get the current image
 	 *
-	 * @returns {(APIEmbedImage | undefined)}
+	 * @returns {(EmbedImageOptions | undefined)}
 	 */
 	getImage() { return this.json.image; }
 	/**
@@ -196,7 +189,7 @@ export default class EmbedBuilder {
 	/**
 	 * get the current thumbnail
 	 *
-	 * @returns {(APIEmbedThumbnail | undefined)}
+	 * @returns {(EmbedImageOptions | undefined)}
 	 */
 	getThumbnail() { return this.json.thumbnail; }
 	/**
@@ -281,9 +274,9 @@ export default class EmbedBuilder {
 	 * convert this embed to a json object
 	 *
 	 * @param {boolean} array - if the returned value should be contained in an array
-	 * @returns {(APIEmbed | Array<APIEmbed>)}
+	 * @returns {(EmbedOptions | Array<EmbedOptions>)}
 	 */
-	toJSON(array: true): [APIEmbed];
-	toJSON(array?: false): APIEmbed;
+	toJSON(array: true): [EmbedOptions];
+	toJSON(array?: false): EmbedOptions;
 	toJSON(array = false) { return array ? [this.json] : this.json; }
 }

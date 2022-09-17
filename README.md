@@ -1,7 +1,9 @@
 ## Discord Additions - Embed Builder
 Some helpful additions to make creating embeds easier.
 
-Get started by using our main class, the `ComponentHelper`.
+Versions `1.0.2` and beyond have been changed to be compatible with [Oceanic](https://github.com/OceanicJS/Oceanic) instead of Eris. If you're using this module with eris, do not update.
+
+Get started by using our main class, the `EmbedBuilder`.
 ```ts
 // const EmbedBuilder = require("@discord-additions/embed-builder");
 import EmbedBuilder from "@discord-additions/embed-builder";
